@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenuloliv-${TANGGAL}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=cosmic-clang
+COMPILER=aosp
 
 ##----------------------------------------------------------##
 # Specify Linker
@@ -110,7 +110,7 @@ function cloneTC() {
 	then
         mkdir aosp-clang
         cd aosp-clang || exit
-	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r450784b.tar.gz
+	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/ab73cd180863dbd17fdb8f20e39b33ab38030cf9/clang-r450784b.tar.gz
         tar -xf clang*
         cd .. || exit
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
@@ -275,19 +275,19 @@ START=$(date +"%s")
            make -kj$(nproc --all) O=out \
 	       ARCH=arm64 \
 	       CC=clang \
-           HOSTCC=clang \
-	       HOSTCXX=clang++ \
+           #HOSTCC=clang \
+	       #HOSTCXX=clang++ \
 	       CLANG_TRIPLE=aarch64-linux-gnu- \
 	       CROSS_COMPILE=aarch64-linux-android- \
 	       CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-	       LD=${LINKER} \
-	       AR=llvm-ar \
-	       NM=llvm-nm \
-	       OBJCOPY=llvm-objcopy \
-	       OBJDUMP=llvm-objdump \
-           STRIP=llvm-strip \
-	       READELF=llvm-readelf \
-	       OBJSIZE=llvm-size \
+	       #LD=${LINKER} \
+	       #AR=llvm-ar \
+	       #NM=llvm-nm \
+	       #OBJCOPY=llvm-objcopy \
+	       #OBJDUMP=llvm-objdump \
+           #STRIP=llvm-strip \
+	       #READELF=llvm-readelf \
+	       #OBJSIZE=llvm-size \
 	       V=$VERBOSE 2>&1 | tee error.log
 	fi
 	
