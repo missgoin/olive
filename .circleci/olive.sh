@@ -20,7 +20,7 @@ DEVICE=cherry-mi439
 DEFCONFIG=${DEVICE}_defconfig
 
 # Select LTO variant ( Full LTO by default )
-DISABLE_LTO=1
+DISABLE_LTO=0
 THIN_LTO=0
 
 # Files
@@ -158,8 +158,8 @@ function exports() {
                
         elif [ -d ${KERNEL_DIR}/sdclang ];
            then
-               export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/sdclang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')
-               export LD_LIBRARY_PATH="${KERNEL_DIR}/sdclang/lib:$LD_LIBRARY_PATH"
+               #export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/sdclang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')
+               #export LD_LIBRARY_PATH="${KERNEL_DIR}/sdclang/lib:$LD_LIBRARY_PATH"
                
         elif [ -d ${KERNEL_DIR}/aosp-clang ];
             then
