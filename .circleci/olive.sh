@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenuloliv-${TANGGAL}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=aosp
+COMPILER=sdclang
 
 ##----------------------------------------------------------##
 # Specify Linker
@@ -99,6 +99,13 @@ function cloneTC() {
 	then
 	git clone --depth=1 https://github.com/kdrag0n/proton-clang.git clang
 	PATH="${KERNEL_DIR}/clang/bin:$PATH"
+	
+	elif [ $COMPILER = "sdclang" ];
+	then
+    git clone --depth=1 https://github.com/ZyCromerZ/SDClang.git -b 14 sdclang
+	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
+	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
+	PATH="${KERNEL_DIR}/sdclang/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
 
 	elif [ $COMPILER = "eva" ];
 	then
@@ -116,7 +123,9 @@ function cloneTC() {
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
 	PATH="${KERNEL_DIR}/aosp-clang/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
+	
 	fi
+	
 	
     # Clone AnyKernel
     #git clone --depth=1 https://github.com/missgoin/AnyKernel3.git
@@ -146,6 +155,11 @@ function exports() {
            then
                export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/cosmic-clang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')
                export LD_LIBRARY_PATH="${KERNEL_DIR}/cosmic-clang/lib:$LD_LIBRARY_PATH"
+               
+        elif [ -d ${KERNEL_DIR}/sdclang ];
+           then
+               export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/sdclang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')
+               export LD_LIBRARY_PATH="${KERNEL_DIR}/sdclang/lib:$LD_LIBRARY_PATH"
                
         elif [ -d ${KERNEL_DIR}/aosp-clang ];
             then
@@ -269,6 +283,25 @@ START=$(date +"%s")
 	       OBJDUMP=llvm-objdump \
 	       STRIP=llvm-strip \
 	       OBJSIZE=llvm-size \
+	       V=$VERBOSE 2>&1 | tee error.log
+	elif [ -d ${KERNEL_DIR}/sdclang ];
+       then
+           make -kj$(nproc --all) O=out \
+	       ARCH=arm64 \
+	       CC=clang \
+           #HOSTCC=clang \
+	       #HOSTCXX=clang++ \
+	       CLANG_TRIPLE=aarch64-linux-gnu- \
+	       CROSS_COMPILE=aarch64-linux-android- \
+	       CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+	       #LD=${LINKER} \
+	       #AR=llvm-ar \
+	       #NM=llvm-nm \
+	       #OBJCOPY=llvm-objcopy \
+	       #OBJDUMP=llvm-objdump \
+           #STRIP=llvm-strip \
+	       #READELF=llvm-readelf \
+	       #OBJSIZE=llvm-size \
 	       V=$VERBOSE 2>&1 | tee error.log
     elif [ -d ${KERNEL_DIR}/aosp-clang ];
        then
