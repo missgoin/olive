@@ -295,6 +295,7 @@ START=$(date +"%s")
 	       CROSS_COMPILE=aarch64-linux-android- \
 	       CROSS_COMPILE_ARM32=arm-linux-androideabi- \
 	       #LD=${LINKER} \
+	       LLVM=1 \
 	       #AR=llvm-ar \
 	       #NM=llvm-nm \
 	       #OBJCOPY=llvm-objcopy \
