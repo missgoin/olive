@@ -20,7 +20,7 @@ DEVICE=cherry-mi439
 DEFCONFIG=${DEVICE}_defconfig
 
 # Select LTO variant ( Full LTO by default )
-DISABLE_LTO=0
+DISABLE_LTO=1
 THIN_LTO=0
 
 # Files
@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenuloliv-${TANGGAL}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=sdclang
+COMPILER=proton
 
 ##----------------------------------------------------------##
 # Specify Linker
@@ -181,8 +181,8 @@ function exports() {
 	    export DISTRO=$(source /etc/os-release && echo "${NAME}")
 	    
 	    # Server caching for speed up compile
-	    export LC_ALL=C && export USE_CCACHE=1
-	    ccache -M 100G
+	    #export LC_ALL=C && export USE_CCACHE=1
+	    #ccache -M 100G
 	
 	}
         
