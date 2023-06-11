@@ -103,8 +103,8 @@ function cloneTC() {
 	elif [ $COMPILER = "sdclang" ];
 	then
     git clone --depth=1 https://github.com/ZyCromerZ/SDClang.git -b 14 sdclang
-	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
-	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
+	git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git -b lineage-19.0 gcc
+	git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git -b lineage-19.0 gcc32
 	PATH="${KERNEL_DIR}/sdclang/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
 
 	elif [ $COMPILER = "eva" ];
