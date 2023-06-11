@@ -156,7 +156,7 @@ function exports() {
                export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/cosmic-clang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')
                export LD_LIBRARY_PATH="${KERNEL_DIR}/cosmic-clang/lib:$LD_LIBRARY_PATH"
                
-        #elif [ -d ${KERNEL_DIR}/sdclang ];
+        ##elif [ -d ${KERNEL_DIR}/sdclang ];
            #then
                #export KBUILD_COMPILER_STRING=$(${KERNEL_DIR}/sdclang/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//' -e 's/^.*clang/clang/')
                #export LD_LIBRARY_PATH="${KERNEL_DIR}/sdclang/lib:$LD_LIBRARY_PATH"
